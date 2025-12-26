@@ -9,7 +9,9 @@
     max-width: 100% !important;
     height: auto !important;
   }
-  button, .btn {
+  /* DON'T affect form elements */
+  button:not([type="submit"]):not([type="button"]), 
+  .btn:not([type="submit"]):not([type="button"]) {
     display: block !important;
     width: 100% !important;
     margin: 10px 0 !important;
