@@ -1,37 +1,24 @@
 <script>
 function applyMobileFix() {
-  document.body.style.padding = '15px';
-  document.body.style.maxWidth = '100vw';
-  document.body.style.overflowX = 'hidden';
-  var imgs = document.getElementsByTagName('img');
-  for (var i = 0; i < imgs.length; i++) {
-    imgs[i].style.maxWidth = '100%';
-    imgs[i].style.height = 'auto';
-  }
-  var buttons = document.querySelectorAll('button, .btn, .button, [class*="btn"], [class*="button"]');
-  for (var i = 0; i < buttons.length; i++) {
-    buttons[i].style.display = 'block';
-    buttons[i].style.width = '100%';
-    buttons[i].style.margin = '10px 0';
-    buttons[i].style.padding = '15px';
-    buttons[i].style.fontSize = '16px';
-  }
-  var text = document.querySelectorAll('h1,h2,h3,p,span,div,td,li');
-  for (var i = 0; i < text.length; i++) {
-    text[i].style.wordBreak = 'break-word';
-    text[i].style.overflowWrap = 'anywhere';
-    text[i].style.maxWidth = '100%';
-  }
-  var containers = document.querySelectorAll('div, section, main, article');
-  for (var i = 0; i < containers.length; i++) {
-    containers[i].style.width = '100%';
-    containers[i].style.maxWidth = '100%';
-    containers[i].style.display = 'block';
+  if (window.innerWidth <= 767) {
+    document.body.style.padding = '15px';
+    document.body.style.maxWidth = '100vw';
+    document.body.style.overflowX = 'hidden';
+    var imgs = document.getElementsByTagName('img');
+    for (var i = 0; i < imgs.length; i++) {
+      imgs[i].style.maxWidth = '100%';
+      imgs[i].style.height = 'auto';
+    }
+    var buttons = document.querySelectorAll('button, .btn, .button');
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].style.display = 'block';
+      buttons[i].style.width = '100%';
+      buttons[i].style.margin = '10px 0';
+    }
+    console.log('Mobile fix applied');
   }
 }
 applyMobileFix();
 window.addEventListener('load', applyMobileFix);
-window.addEventListener('resize', function() {
-  if (window.innerWidth <= 767) applyMobileFix();
-});
+window.addEventListener('resize', applyMobileFix);
 </script>
