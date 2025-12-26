@@ -1,0 +1,200 @@
+<script>
+function setupProfessionalPrint() {
+    const printButtons = document.querySelectorAll('button');
+    
+    printButtons.forEach(btn => {
+        if (btn.innerHTML.includes('fa-print') || btn.textContent.includes('Print')) {
+            const originalClick = btn.onclick;
+            
+            if (originalClick && originalClick.toString().includes('showNotification')) {
+                btn.onclick = null;
+                
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    showNotification('Preparing professional print document...', 'info');
+                    
+                    const printWin = window.open('', '_blank', 'width=1024,height=768,scrollbars=yes');
+                    
+                    printWin.document.write(`
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alabama Healthcare Partners - Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            color: #333; 
+            background: #f5f7fa;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .document-container {
+            width: 8.5in;
+            min-height: 11in;
+            background: white;
+            padding: 1in;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            margin: 0 auto;
+        }
+        .letterhead {
+            text-align: center;
+            border-bottom: 3px solid #2c5282;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+        .logo-container {
+            margin-bottom: 20px;
+        }
+        .logo-container img {
+            width: 300px;
+            height: auto;
+            max-width: 100%;
+        }
+        .company-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c5282;
+            margin: 10px 0 5px 0;
+        }
+        .company-tagline {
+            font-size: 16px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+        .document-title {
+            font-size: 24px;
+            color: #2d3748;
+            text-align: center;
+            margin: 40px 0 20px 0;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .document-meta {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border-left: 4px solid #4299e1;
+        }
+        .meta-item {
+            margin: 8px 0;
+            color: #4a5568;
+        }
+        .document-content {
+            line-height: 1.7;
+            margin: 30px 0;
+            min-height: 300px;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+        }
+        .confidential-footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 12px;
+        }
+        .watermark {
+            opacity: 0.03;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 120px;
+            color: #000;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        
+        @media print {
+            body { background: white; padding: 0; }
+            .document-container { 
+                width: 100%; 
+                height: 100%; 
+                padding: 0.5in; 
+                box-shadow: none; 
+                margin: 0;
+            }
+            .logo-container img { width: 250px; }
+            .watermark { opacity: 0.05; }
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">ALABAMA HEALTHCARE PARTNERS</div>
+    
+    <div class="document-container">
+        <div class="letterhead">
+            <div class="logo-container">
+                <img src="my-logo.png" alt="Alabama Healthcare Partners Logo">
+            </div>
+            <div class="company-name">Alabama Healthcare Partners</div>
+            <div class="company-tagline">Advanced Medicaid Intelligence Platform</div>
+        </div>
+        
+        <h1 class="document-title">Official Document</h1>
+        
+        <div class="document-meta">
+            <div class="meta-item"><strong>Generated:</strong> ${new Date().toLocaleString()}</div>
+            <div class="meta-item"><strong>User:</strong> System Administrator</div>
+            <div class="meta-item"><strong>Document ID:</strong> DOC-${Date.now().toString(36).toUpperCase()}</div>
+            <div class="meta-item"><strong>Purpose:</strong> Official Record</div>
+        </div>
+        
+        <div class="document-content">
+            <h3>Document Overview</h3>
+            <p>This document has been generated from the Alabama Healthcare Partners Medicaid Intelligence System.</p>
+            <p>All information contained herein is confidential and protected under HIPAA regulations.</p>
+            <p>For complete patient records, please refer to the electronic health record system.</p>
+            
+            <h3>Document Details</h3>
+            <ul>
+                <li>Confidentiality Level: High</li>
+                <li>Retention Period: 7 years</li>
+                <li>Authorized Personnel Only</li>
+            </ul>
+        </div>
+        
+        <div class="confidential-footer">
+            <p><strong>CONFIDENTIAL & PROPRIETARY</strong></p>
+            <p>&copy; ${new Date().getFullYear()} Alabama Healthcare Partners. All rights reserved.</p>
+            <p>Unauthorized duplication or distribution is strictly prohibited.</p>
+            <p>This document is valid only when generated through official system channels.</p>
+        </div>
+    </div>
+    
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                window.print();
+                setTimeout(function() {
+                    window.close();
+                }, 500);
+            }, 1500);
+        };
+    </script>
+</body>
+</html>
+                    `);
+                    
+                    printWin.document.close();
+                });
+            }
+        }
+    });
+    
+    console.log('Professional print system ready');
+}
+
+setTimeout(setupProfessionalPrint, 1500);
+</script>
