@@ -2914,7 +2914,7 @@
           <h3>Dashboard</h3>
           <ul class="sidebar-nav">
             <li class="nav-item">
-              <a class="nav-link active" data-page="dashboard">
+              <a class="nav-link active" data-page="dashboard" onclick="showPage("dashboard"); return false;">
                 <i class="fas fa-tachometer-alt"></i> Overview
               </a>
             </li>
@@ -5558,7 +5558,17 @@
     const pageContents = document.querySelectorAll('.page-content');
     const navLinks = document.querySelectorAll('.nav-link');
     function showPage(pageId) {
-      pageContents.forEach(page => page.classList.add('hidden'));
+// FIX FOR OVERVIEW BUTTON
+setTimeout(function() {
+var links = document.querySelectorAll('[data-page="dashboard"]');
+for (var i = 0; i < links.length; i++) {
+links[i].addEventListener('click', function(e) {
+e.preventDefault();
+showPage('dashboard');
+return false;
+});
+}
+}, 100);      pageContents.forEach(page => page.classList.add('hidden'));
       const target = document.getElementById(`page-${pageId}`);
       if (target) target.classList.remove('hidden');
       navLinks.forEach(link => {
@@ -5668,7 +5678,35 @@
         showNotification('Logged out successfully', 'info');
       }
     });
-    console.log('All sidebar pages and internal buttons in every section now fully functional with feedback!');
+// SPECIFIC FIX FOR OVERVIEW BUTTON ONLY
+setTimeout(function() {
+var overview = document.querySelector('a[data-page="dashboard"] i.fa-tachometer-alt').parentElement;
+if (overview) {
+overview.onclick = function(e) {
+e.preventDefault();
+e.stopPropagation();
+if (typeof showPage === 'function') {
+showPage('dashboard');
+}
+return false;
+};
+}
+}, 500);    console.log('All sidebar pages and internal buttons in every section now fully functional with feedback!');
   </script>
 </body>
 </html>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var pageLinks = document.querySelectorAll("[data-page]");
+    for (var i = 0; i < pageLinks.length; i++) {
+        pageLinks[i].onclick = function(e) {
+            e.preventDefault();
+            var pageId = this.getAttribute("data-page");
+            if (pageId && window.showPage) {
+                window.showPage(pageId);
+            }
+            return false;
+        };
+    }
+});
+</script></body></html>
