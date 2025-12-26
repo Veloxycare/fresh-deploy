@@ -1,0 +1,38 @@
+/* Mobile Fixes */
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+    padding: 10px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+    body {
+        padding: 15px;
+    }
+    div, section {
+        width: 100% !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    body {
+        padding: 10px;
+        font-size: 16px;
+    }
+    div, section {
+        display: block !important;
+        width: 100% !important;
+        float: none !important;
+    }
+    button {
+        padding: 15px !important;
+        font-size: 18px !important;
+    }
+}
