@@ -5526,15 +5526,31 @@
       </main>
     </div>
   </div>
+document.addEventListener('DOMContentLoaded', function() {
+    var textElements = document.querySelectorAll('h1, h2, h3, p, span');
+    textElements.forEach(function(el) {
+      el.style.wordBreak = 'break-word';
+      el.style.overflowWrap = 'anywhere';
+    });
 <script>
+</script>
+<script>
+// Mobile fix
 if (window.innerWidth <= 767) {
-document.body.style.padding = "20px";
-document.body.style.maxWidth = "100vw";
-document.body.style.overflowX = "hidden";
-var imgs = document.images;
-for (var i = 0; i < imgs.length; i++) {
-imgs[i].style.maxWidth = "100%";
+  document.body.style.padding = '20px';
+  document.body.style.maxWidth = '100vw';
+  document.body.style.overflowX = 'hidden';
+  var imgs = document.images;
+  for (var i = 0; i < imgs.length; i++) {
+    imgs[i].style.maxWidth = '100%';
+  }
 }
+</script>
+</body>
+<script>
+</script>
+<script>
+</script>
+<script>
 }
-</script></body>
-</html>
+</script>
