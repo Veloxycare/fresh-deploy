@@ -1,5 +1,5 @@
-/* TEST - Can you see red border? */
+/* FORCE REFRESH: Fri Dec 26 10:00:56 CST 2025 */
+
 body {
-    border: 10px solid red;
-    background-color: yellow;
+    background-color: #ff0000 !important;
 }
