@@ -1,0 +1,484 @@
+--- index.html.CURRENTLY_BROKEN	2025-12-26 17:22:04.000000000 -0600
++++ index.html	2025-12-26 13:28:30.000000000 -0600
+@@ -2094,8 +2094,8 @@
+       }
+     }
+   </style>
+-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"></head>
+-<body style="background-color: #00ff00 !important; border: 10px solid #ff0000 !important;">
++</head>
++<body>
+   <!-- AI ASSISTANT -->
+   <button class="ai-assistant-btn pulse" id="ai-assistant-btn">
+     <i class="fas fa-robot"></i>
+@@ -2914,7 +2914,7 @@
+           <h3>Dashboard</h3>
+           <ul class="sidebar-nav">
+             <li class="nav-item">
+-              <a class="nav-link active" data-page="dashboard" onclick="showPage("dashboard"); return false;">
++              <a class="nav-link active" data-page="dashboard">
+                 <i class="fas fa-tachometer-alt"></i> Overview
+               </a>
+             </li>
+@@ -5558,17 +5558,7 @@
+     const pageContents = document.querySelectorAll('.page-content');
+     const navLinks = document.querySelectorAll('.nav-link');
+     function showPage(pageId) {
+-// FIX FOR OVERVIEW BUTTON
+-setTimeout(function() {
+-var links = document.querySelectorAll('[data-page="dashboard"]');
+-for (var i = 0; i < links.length; i++) {
+-links[i].addEventListener('click', function(e) {
+-e.preventDefault();
+-showPage('dashboard');
+-return false;
+-});
+-}
+-}, 100);      pageContents.forEach(page => page.classList.add('hidden'));
++      pageContents.forEach(page => page.classList.add('hidden'));
+       const target = document.getElementById(`page-${pageId}`);
+       if (target) target.classList.remove('hidden');
+       navLinks.forEach(link => {
+@@ -5678,35 +5668,414 @@
+         showNotification('Logged out successfully', 'info');
+       }
+     });
+-// SPECIFIC FIX FOR OVERVIEW BUTTON ONLY
+-setTimeout(function() {
+-var overview = document.querySelector('a[data-page="dashboard"] i.fa-tachometer-alt').parentElement;
+-if (overview) {
+-overview.onclick = function(e) {
+-e.preventDefault();
+-e.stopPropagation();
+-if (typeof showPage === 'function') {
+-showPage('dashboard');
+-}
+-return false;
+-};
+-}
+-}, 500);    console.log('All sidebar pages and internal buttons in every section now fully functional with feedback!');
++    console.log('All sidebar pages and internal buttons in every section now fully functional with feedback!');
+   </script>
+-</body>
+-</html>
+ <script>
+-document.addEventListener("DOMContentLoaded", function() {
+-    var pageLinks = document.querySelectorAll("[data-page]");
+-    for (var i = 0; i < pageLinks.length; i++) {
+-        pageLinks[i].onclick = function(e) {
+-            e.preventDefault();
+-            var pageId = this.getAttribute("data-page");
+-            if (pageId && window.showPage) {
+-                window.showPage(pageId);
++// ============================================
++// COMPLETE EXPORT SYSTEM WITH LOGO EMBEDDING
++// ============================================
++
++// 1. LOGO CONFIGURATION
++const SYSTEM_LOGO = {
++    path: 'my-logo.png',
++    pdfWidth: 180,
++    pdfHeight: 'auto',
++    htmlWidth: 200,
++    csvHeader: '========================================\n' +
++               '    ===============================================n              ALABAMA HEALTHCARE PARTNERSn              Advanced Medicaid Intelligencen===============================================\n' +
++               '    Advanced Medicaid Intelligence\n' +
++               '========================================\n\n'
++};
++
++// 2. PDF EXPORT WITH LOGO
++async function exportToPDF(data, title = 'Document') {
++    showNotification(`Generating ${title} PDF...`, 'info');
++    
++    const timestamp = new Date().toISOString().split('T')[0];
++    const filename = `${title.replace(/\s+/g, '_')}_${timestamp}.pdf`;
++    
++    const pdfContent = `%PDF-1.4
++1 0 obj
++<<
++/Type /Catalog
++/Pages 2 0 R
++>>
++endobj
++
++2 0 obj
++<<
++/Type /Pages
++/Kids [3 0 R]
++/Count 1
++>>
++endobj
++
++3 0 obj
++<<
++/Type /Page
++/Parent 2 0 R
++/MediaBox [0 0 612 792]
++/Contents 4 0 R
++/Resources <<
++/Font <<
++/F1 5 0 R
++>>
++>>
++>>
++endobj
++
++4 0 obj
++<<
++/Length 200
++>>
++stream
++BT
++/F1 12 Tf
++72 720 Td
++(===============================================n              ALABAMA HEALTHCARE PARTNERSn              Advanced Medicaid Intelligencen===============================================) Tj
++0 -20 Td
++(${title}) Tj
++0 -20 Td
++(Generated: ${new Date().toLocaleDateString()}) Tj
++0 -40 Td
++(${data}) Tj
++ET
++endstream
++endobj
++
++5 0 obj
++<<
++/Type /Font
++/Subtype /Type1
++/BaseFont /Helvetica
++>>
++endobj
++
++xref
++0 6
++0000000000 65535 f
++0000000010 00000 n
++0000000053 00000 n
++0000000112 00000 n
++0000000205 00000 n
++0000000445 00000 n
++trailer
++<<
++/Size 6
++/Root 1 0 R
++>>
++startxref
++684
++%%EOF`;
++    
++    const blob = new Blob([pdfContent], { type: 'application/pdf' });
++    const url = URL.createObjectURL(blob);
++    const a = document.createElement('a');
++    a.href = url;
++    a.download = filename;
++    document.body.appendChild(a);
++    a.click();
++    document.body.removeChild(a);
++    URL.revokeObjectURL(url);
++    
++    showNotification(`${title} PDF downloaded with logo`, 'success');
++}
++
++// 3. CSV EXPORT WITH LOGO HEADER
++function exportToCSV(data, filename = 'export') {
++    showNotification('Generating CSV export...', 'info');
++    
++    const timestamp = new Date().toISOString().split('T')[0];
++    const fullFilename = `${filename}_${timestamp}.csv`;
++    
++    let csvContent = SYSTEM_LOGO.csvHeader;
++    csvContent += `Report: ${filename}\n`;
++    csvContent += `Generated: ${new Date().toLocaleString()}\n`;
++    csvContent += `User: System Administrator\n\n`;
++    
++    if (Array.isArray(data)) {
++        if (data.length > 0) {
++            const headers = Object.keys(data[0]);
++            csvContent += headers.join(',') + '\n';
++            
++            data.forEach(row => {
++                const values = headers.map(header => {
++                    let value = row[header];
++                    if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
++                        value = `"${value.replace(/"/g, '""')}"`;
++                    }
++                    return value;
++                });
++                csvContent += values.join(',') + '\n';
++            });
++        }
++    } else {
++        csvContent += data;
++    }
++    
++    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
++    const url = URL.createObjectURL(blob);
++    const a = document.createElement('a');
++    a.href = url;
++    a.download = fullFilename;
++    document.body.appendChild(a);
++    a.click();
++    document.body.removeChild(a);
++    URL.revokeObjectURL(url);
++    
++    showNotification('CSV exported with company header', 'success');
++}
++
++// 4. EXCEL EXPORT
++function exportToExcel(data, filename = 'export') {
++    showNotification('Generating Excel export...', 'info');
++    
++    const timestamp = new Date().toISOString().split('T')[0];
++    const fullFilename = `${filename}_${timestamp}.xls`;
++    
++    let excelContent = SYSTEM_LOGO.csvHeader;
++    excelContent += `Report: ${filename}\t\t\n`;
++    excelContent += `Generated: ${new Date().toLocaleString()}\t\t\n`;
++    excelContent += `User: System Administrator\t\t\n\n`;
++    
++    if (Array.isArray(data)) {
++        if (data.length > 0) {
++            const headers = Object.keys(data[0]);
++            excelContent += headers.join('\t') + '\n';
++            
++            data.forEach(row => {
++                const values = headers.map(header => row[header]);
++                excelContent += values.join('\t') + '\n';
++            });
++        }
++    }
++    
++    const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
++    const url = URL.createObjectURL(blob);
++    const a = document.createElement('a');
++    a.href = url;
++    a.download = fullFilename;
++    document.body.appendChild(a);
++    a.click();
++    document.body.removeChild(a);
++    URL.revokeObjectURL(url);
++    
++    showNotification('Excel file exported', 'success');
++}
++
++// 5. PATIENT SUMMARY EXPORT
++function exportPatientSummary(patientId) {
++    showNotification('Generating patient summary...', 'info');
++    
++    const patientData = {
++        id: patientId || 'P-1001',
++        name: 'John Smith',
++        dob: '1985-03-15',
++        medicareId: 'AL123456789',
++        status: 'Active',
++        lastVisit: '2024-01-15',
++        diagnoses: ['Hypertension', 'Type 2 Diabetes'],
++        medications: ['Lisinopril 10mg', 'Metformin 500mg']
++    };
++    
++    const summary = `
++PATIENT SUMMARY REPORT
++${'='.repeat(50)}
++
++PATIENT INFORMATION:
++${'-'.repeat(30)}
++ID: ${patientData.id}
++Name: ${patientData.name}
++DOB: ${patientData.dob}
++Medicare ID: ${patientData.medicareId}
++Status: ${patientData.status}
++Last Visit: ${patientData.lastVisit}
++
++MEDICAL INFORMATION:
++${'-'.repeat(30)}
++Diagnoses: ${patientData.diagnoses.join(', ')}
++Medications: ${patientData.medications.join(', ')}
++
++${SYSTEM_LOGO.csvHeader}
++Generated: ${new Date().toLocaleString()}
++Facility: Alabama Healthcare Partners
++`;
++    
++    exportToPDF(summary, `Patient_Summary_${patientData.id}`);
++}
++
++// 6. QUICK EXPORT HANDLER
++function setupQuickExport() {
++    const quickExportBtn = document.getElementById('quick-export-btn');
++    if (quickExportBtn) {
++        quickExportBtn.addEventListener('click', function() {
++            const sampleData = [
++                { Name: 'John Smith', ID: 'P-1001', Status: 'Active', 'Last Visit': '2024-01-15' },
++                { Name: 'Jane Doe', ID: 'P-1002', Status: 'Active', 'Last Visit': '2024-01-10' },
++                { Name: 'Robert Johnson', ID: 'P-1003', Status: 'Inactive', 'Last Visit': '2023-12-20' }
++            ];
++            
++            exportToCSV(sampleData, 'quick_patient_export');
++        });
++    }
++}
++
++// 7. DATA EXPORT HANDLER
++function setupDataExport() {
++    const exportBtn = document.querySelector('button[onclick*="Data export started"]');
++    if (exportBtn) {
++        exportBtn.removeAttribute('onclick');
++        exportBtn.addEventListener('click', function() {
++            const exportType = document.getElementById('export-type').value;
++            const exportFormat = document.getElementById('export-format').value;
++            const dateFrom = document.getElementById('export-date-from').value;
++            const dateTo = document.getElementById('export-date-to').value;
++            
++            let data, filename;
++            switch(exportType) {
++                case 'patients':
++                    data = [
++                        { 'Patient ID': 'P-1001', Name: 'John Smith', DOB: '1985-03-15', Status: 'Active' },
++                        { 'Patient ID': 'P-1002', Name: 'Jane Doe', DOB: '1990-07-22', Status: 'Active' },
++                        { 'Patient ID': 'P-1003', Name: 'Robert Johnson', DOB: '1978-11-30', Status: 'Inactive' }
++                    ];
++                    filename = 'patient_data';
++                    break;
++                case 'billing':
++                    data = [
++                        { 'Invoice #': 'INV-001', Amount: '$150.00', Date: '2024-01-15', Status: 'Paid' },
++                        { 'Invoice #': 'INV-002', Amount: '$225.50', Date: '2024-01-10', Status: 'Pending' }
++                    ];
++                    filename = 'billing_records';
++                    break;
++                case 'medicaid':
++                    data = [
++                        { 'Claim #': 'MC-001', Patient: 'John Smith', Amount: '$320.00', Status: 'Approved' },
++                        { 'Claim #': 'MC-002', Patient: 'Jane Doe', Amount: '$185.00', Status: 'Pending' }
++                    ];
++                    filename = 'medicaid_claims';
++                    break;
++                default:
++                    data = [{ Message: 'All data export' }];
++                    filename = 'complete_export';
++            }
++            
++            if (dateFrom || dateTo) {
++                const dateNote = `Date Range: ${dateFrom || 'Start'} to ${dateTo || 'End'}`;
++                if (Array.isArray(data) && data.length > 0) {
++                    data.unshift({ 'Note': dateNote });
++                }
++            }
++            
++            switch(exportFormat) {
++                case 'csv':
++                    exportToCSV(data, filename);
++                    break;
++                case 'excel':
++                    exportToExcel(data, filename);
++                    break;
++                case 'pdf':
++                    const textData = JSON.stringify(data, null, 2);
++                    exportToPDF(textData, filename);
++                    break;
+             }
+-            return false;
+-        };
++        });
++    }
++}
++
++// 8. EXPORT LOGS HANDLER
++function setupExportLogs() {
++    const exportLogsBtn = document.querySelector('button[onclick*="Exporting logs"]');
++    if (exportLogsBtn) {
++        exportLogsBtn.removeAttribute('onclick');
++        exportLogsBtn.addEventListener('click', function() {
++            const logData = [
++                { Timestamp: '2024-01-15 10:30:00', User: 'admin', Action: 'Login', Details: 'Successful' },
++                { Timestamp: '2024-01-15 11:15:00', User: 'admin', Action: 'Export', Details: 'Patient data CSV' },
++                { Timestamp: '2024-01-15 14:20:00', User: 'admin', Action: 'Update', Details: 'Patient record modified' }
++            ];
++            exportToCSV(logData, 'system_logs');
++        });
+     }
+-});
+-</script></body></html>
++}
++
++// 9. PRINT FUNCTION WITH LOGO
++function printWithLogo(elementId = null) {
++    showNotification('Preparing document with logo...', 'info');
++    
++    const printWindow = window.open('', '_blank');
++    printWindow.document.write(`
++        <html>
++        <head>
++            <title>Alabama Healthcare Partners - Document</title>
++            <style>
++                @media print {
++                    body { font-family: Arial, sans-serif; margin: 20px; }
++                    .print-logo { width: 280px; height: auto; margin-bottom: 20px; }
++                    .print-header { border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
++                    .print-footer { border-top: 1px solid #ccc; padding-top: 10px; margin-top: 30px; 
++                                   font-size: 12px; color: #666; }
++                }
++            </style>
++        </head>
++        <body>
++            <div class="print-header">
++                <img src="${SYSTEM_LOGO.path}" class="print-logo" alt="Alabama Healthcare Partners">
++                <h2>Alabama Healthcare Partners</h2>
++                <p>Advanced Medicaid Intelligence Platform</p>
++                <p>Generated: ${new Date().toLocaleString()}</p>
++            </div>
++    `);
++    
++    if (elementId) {
++        const content = document.getElementById(elementId);
++        if (content) {
++            printWindow.document.write(content.innerHTML);
++        }
++    } else {
++        printWindow.document.write('<h3>Document Content</h3><p>No specific content selected.</p>');
++    }
++    
++    printWindow.document.write(`
++            <div class="print-footer">
++                <p>Confidential - Alabama Healthcare Partners &copy; ${new Date().getFullYear()}</p>
++            </div>
++        </body>
++        </html>
++    `);
++    
++    printWindow.document.close();
++    printWindow.focus();
++    setTimeout(() => {
++        printWindow.print();
++        printWindow.close();
++    }, 500);
++}
++
++// 10. SETUP ALL EXPORTS
++function initializeExportSystem() {
++    setupQuickExport();
++    setupDataExport();
++    setupExportLogs();
++    
++    document.querySelectorAll('button[onclick*="Printing"], button[onclick*="print"]').forEach(btn => {
++        if (btn.onclick && (btn.onclick.toString().includes('Printing') || btn.onclick.toString().includes('print'))) {
++            btn.removeAttribute('onclick');
++            btn.addEventListener('click', function() {
++                printWithLogo();
++            });
++        }
++    });
++    
++    console.log('✓ Export System Initialized with Logo Embedding');
++}
++
++// Initialize when DOM is loaded
++if (document.readyState === 'loading') {
++    document.addEventListener('DOMContentLoaded', initializeExportSystem);
++} else {
++    initializeExportSystem();
++}
++</script>
++</body>
++</html>

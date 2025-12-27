@@ -1,0 +1,48 @@
+/* Mobile and tablet optimizations - add this to your site */
+@media (max-width: 1024px) {
+  /* Tablet: stack side-by-side elements */
+  body, .container, .dashboard, .grid, .row, .flex, .cards, .stats {
+    flex-direction: column !important;
+  }
+  .card, .panel, .section, .column {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Phone: larger text/buttons for easy tap/read */
+  body {
+    font-size: 16px;
+  }
+  h1, h2, h3 {
+    font-size: 1.5rem;
+  }
+  button, .btn, input, select, a {
+    min-height: 48px;
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+
+  /* Make wide tables scroll horizontally */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* Hide desktop sidebar if exists, show mobile menu */
+  .sidebar, .desktop-menu {
+    display: none !important;
+  }
+  .mobile-menu, .hamburger-menu {
+    display: block !important;
+  }
+
+  /* General fix for overflow */
+  body {
+    overflow-x: hidden;
+  }
+}
