@@ -1,0 +1,12 @@
+<style>
+/* Fix document logo size and appearance */
+.document-logo-icon {
+    background: url("my-logo.png") center/contain no-repeat !important;
+    background-color: transparent !important;
+    width: 140px !important;
+    height: 100px !important;
+    border-radius: 0 !important;
+    color: transparent !important;
+    font-size: 0 !important;
+}
+</style>

@@ -1,0 +1,15 @@
+.logo-img { display: none !important; }
+.logo-text-large { display: none !important; }
+
+.logo-container {
+    position: relative;
+    min-height: 60px;
+}
+
+.logo-container::before {
+    content: "";
+    display: block;
+    background: url('my-logo.png') center/contain no-repeat;
+    height: 50px;
+    margin: 0 auto 10px auto;
+}

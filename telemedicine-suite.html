@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telemedicine Suite - IntakeAccess.ai</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --hipaa-blue: #1e40af;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #f0f4f8; padding: 20px; }
+        
+        .container { max-width: 1000px; margin: 0 auto; }
+        
+        .header {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--hipaa-blue);
+        }
+        
+        .header h1 {
+            color: var(--hipaa-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .module {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .module h3 {
+            color: var(--hipaa-blue);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .features {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-top: 15px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .modules { grid-template-columns: 1fr; }
+            body { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 Telemedicine Suite</h1>
+            <p>HIPAA compliant telehealth platform</p>
+        </div>
+        
+        <div class="modules">
+            <!-- Video Consultation -->
+            <div class="module">
+                <h3><span>🎥</span> HIPAA Video Consultation</h3>
+                <ul class="features">
+                    <li>End-to-end encrypted video</li>
+                    <li>Virtual waiting room</li>
+                    <li>Screen sharing</li>
+                    <li>Recording (with consent)</li>
+                </ul>
+                <button class="btn">Start Video Session</button>
+            </div>
+            
+            <!-- E-Prescribing -->
+            <div class="module">
+                <h3><span>💊</span> E-Prescribing</h3>
+                <ul class="features">
+                    <li>DEA EPCS compliant</li>
+                    <li>Drug interaction checks</li>
+                    <li>Pharmacy integration</li>
+                    <li>Real-time eligibility</li>
+                </ul>
+                <button class="btn">New E-Prescription</button>
+            </div>
+            
+            <!-- RPM -->
+            <div class="module">
+                <h3><span>📊</span> Remote Patient Monitoring</h3>
+                <ul class="features">
+                    <li>Vital signs tracking</li>
+                    <li>Device integration</li>
+                    <li>Automated alerts</li>
+                    <li>CMS compliance tools</li>
+                </ul>
+                <button class="btn">View RPM Dashboard</button>
+            </div>
+            
+            <!-- Wound Imaging -->
+            <div class="module">
+                <h3><span>📷</span> Wound Imaging</h3>
+                <ul class="features">
+                    <li>High-resolution imaging</li>
+                    <li>Measurement tools</li>
+                    <li>Healing progression</li>
+                    <li>AI analysis</li>
+                </ul>
+                <button class="btn">Capture Image</button>
+            </div>
+            
+            <!-- Secure Messaging -->
+            <div class="module">
+                <h3><span>💬</span> Secure Messaging</h3>
+                <ul class="features">
+                    <li>Encrypted messaging</li>
+                    <li>File sharing</li>
+                    <li>Read receipts</li>
+                    <li>Message templates</li>
+                </ul>
+                <button class="btn">Open Messages</button>
+            </div>
+            
+            <!-- Patient Management -->
+            <div class="module">
+                <h3><span>👥</span> Patient Management</h3>
+                <ul class="features">
+                    <li>Patient profiles</li>
+                    <li>Appointment scheduling</li>
+                    <li>Document management</li>
+                    <li>Billing integration</li>
+                </ul>
+                <button class="btn">View Patients</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
