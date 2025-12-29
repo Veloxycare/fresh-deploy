@@ -7496,3 +7496,11 @@ console.log("Test 2: printDocument function exists:", typeof printDocument);
             w.print();
             w.close();
         }
+        function printDocument(filename) {
+            const win = window.open('', '_blank');
+            win.document.write('<html><head><title>' + filename + '</title></head><body style="margin:40px"><img src="my-logo.png" alt="Logo" style="height:60px"><h1>HealthIntake AI</h1><p>' + filename + '</p></body></html>');
+            win.document.close();
+            win.focus();
+            win.print();
+            win.close();
+        }
