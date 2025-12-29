@@ -6809,47 +6809,12 @@ border-color: rgba(40, 167, 69, 0.3);
         }
         
         function printDocument(filename) {
-            showNotification(`Preparing ${filename} for printing...`, 'info');
-            
-            const printContent = document.createElement('div');
-            printContent.id = 'printContent';
-            printContent.style.cssText = 'position: absolute; left: -9999px; top: -9999px;';
-            
-            let documentContent = getDocumentContent(filename);
-            
-            printContent.innerHTML = `
-                <div style="font-family: Arial, sans-serif; margin: 40px; color: #333;">
-                    <div style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #0066cc;">
-                        <img src="my-logo.png" alt="HealthIntake AI" style="height: 60px; margin-bottom: 10px;">
-                        <h1 style="color: #0066cc; margin: 10px 0; font-size: 24px;">HealthIntake AI</h1>
-                        <div style="color: #666; font-size: 14px; margin-bottom: 20px;">AI-Powered Healthcare Platform</div>
-                        <div style="font-size: 18px; font-weight: bold;">${getDocumentTitle(filename)}</div>
-                    </div>
-                    
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                        <strong>Patient:</strong> [Patient Name] | <strong>Date:</strong> ${new Date().toLocaleDateString()} | <strong>ID:</strong> [Patient ID]
-                    </div>
-                    
-                    <div style="line-height: 1.6;">
-                        ${documentContent}
-                    </div>
-                    
-                    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; text-align: center; font-size: 12px; color: #666;">
-                        Document printed from HealthIntake AI • HIPAA Compliant • ${new Date().toLocaleDateString()}
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(printContent);
-            
-            setTimeout(() => {
-                window.print();
-                setTimeout(() => {
-                    document.body.removeChild(printContent);
-                    showNotification(`${filename} printed successfully!`, 'success');
-                }, 100);
-            }, 500);
-        }
+    const w = window.open("", "_blank");
+    w.document.write(`<html><head><title>${filename}</title></head><body style="margin:40px;font-family:Arial;"><div style="text-align:center;"><img src="my-logo.png" alt="HealthIntake AI" style="height:60px;"><h1 style="color:#0066cc;">HealthIntake AI</h1><h2>${filename}</h2></div><p>Patient Document</p></body></html>`);
+    w.document.close();
+    w.print();
+    w.close();
+}
         
         function getDocumentContent(filename) {
             const documents = {
@@ -7393,29 +7358,6 @@ const planPrices = {
 "enterprise": 897
 };
 
-        function updateCollectionFees() {
-            const feeElements = document.querySelectorAll(".plan-collection-fee");
-            
-            if (feeElements.length >= 3) {
-                const basicTotal = feeElements[0].querySelector(".fee-total");
-                if (basicTotal) {
-                    const basicFee = planPrices.basic * feeRates.basic;
-                    basicTotal.textContent = "$" + basicFee.toFixed(2);
-                }
-                
-                const proTotal = feeElements[1].querySelector(".fee-total");
-                if (proTotal) {
-                    const proFee = planPrices.professional * feeRates.professional;
-                    proTotal.textContent = "$" + proFee.toFixed(2);
-                }
-                
-                const enterpriseTotal = feeElements[2].querySelector(".fee-total");
-                if (enterpriseTotal) {
-                    const enterpriseFee = planPrices.enterprise * feeRates.enterprise;
-                    enterpriseTotal.textContent = "$" + enterpriseFee.toFixed(2);
-                }
-            }
-        }
 </script></body>
 </html><style>.login-form-header { margin-top: 100px !important; }</style>
 <style>#site-logo { height: 180px; margin: 20px auto; display: block; } .logo-img { display: none; }</style>
@@ -7541,4 +7483,16 @@ function debugPrint() {
             
             // Clean up
             document.body.removeChild(content);
+        }
+<script>
+console.log("=== PRINT DEBUG ===");
+console.log("Test 1: Script loaded");
+console.log("Test 2: printDocument function exists:", typeof printDocument);
+</script>
+        function directPrint(filename) {
+            const w = window.open('', '_blank');
+            w.document.write('<html><head><title>' + filename + '</title></head><body style="margin: 40px;"><img src="my-logo.png" alt="Logo" style="height: 60px;"><h1>HealthIntake AI</h1><p>' + filename + '</p></body></html>');
+            w.document.close();
+            w.print();
+            w.close();
         }
