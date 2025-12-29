@@ -2045,38 +2045,7 @@
         
         .plan-setup-fee {
             font-size: 1rem;
-.plan-collection-fee {
-background: #f8f9fa;
-border: 1px solid #e9ecef;
-border-radius: 8px;
-padding: 10px 15px;
-margin: 15px 0;
-font-size: 0.95rem;
-display: flex;
-align-items: center;
-gap: 10px;
-}
-
-.plan-collection-fee i {
-color: #28a745;
-font-size: 1.1rem;
-}
-
-.plan-collection-fee .fee-amount {
-font-weight: 700;
-color: #28a745;
-}
-
-.plan-collection-fee .fee-total {
-font-weight: 700;
-color: var(--dark);
-}
-
-.subscription-plan.featured .plan-collection-fee,
-.subscription-plan.featured-enterprise .plan-collection-fee {
-background: rgba(40, 167, 69, 0.1);
-border-color: rgba(40, 167, 69, 0.3);
-}            color: var(--warning);
+            color: var(--warning);
             font-weight: 600;
             margin-bottom: 20px;
             padding: 10px;
@@ -3373,7 +3342,40 @@ border-color: rgba(40, 167, 69, 0.3);
             background: rgba(239, 68, 68, 0.1);
             color: var(--danger);
         }
-    </style>
+    <style>
+.plan-collection-fee {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin: 15px 0;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.plan-collection-fee i {
+    color: #28a745;
+    font-size: 1.1rem;
+}
+
+.plan-collection-fee .fee-amount {
+    font-weight: 700;
+    color: #28a745;
+}
+
+.plan-collection-fee .fee-total {
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.subscription-plan.featured .plan-collection-fee,
+.subscription-plan.featured-enterprise .plan-collection-fee {
+    background: rgba(40, 167, 69, 0.1);
+    border-color: rgba(40, 167, 69, 0.3);
+}
+</style>\n</style>
 </head>
 <body>
     <!-- ===== LOGIN PAGE ===== -->
@@ -4209,11 +4211,12 @@ border-color: rgba(40, 167, 69, 0.3);
                         <h3 class="plan-name">BASIC</h3>
                         <div class="plan-price">$197<span style="font-size: 1.2rem;">/month</span></div>
                         <div class="plan-period">Monthly Subscription</div>
+                        <div class="plan-collection-fee">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Collection Fee: <span class="fee-amount">2%</span> (<span class="fee-total">$3.94</span>/month)</span>
+                        </div>
                         
-<div class="plan-collection-fee">
-<i class="fas fa-exchange-alt"></i>
-<span>Collection Fee: <span class="fee-amount">2%</span></span>
-</div>                        <div class="plan-setup-fee">
+                        <div class="plan-setup-fee">
                             <i class="fas fa-check-circle free"></i>
                             <span>Setup Fee: <span class="free">$0 (FREE SETUP)</span></span>
                         </div>
@@ -4259,11 +4262,12 @@ border-color: rgba(40, 167, 69, 0.3);
                         <h3 class="plan-name">PROFESSIONAL</h3>
                         <div class="plan-price">$397<span style="font-size: 1.2rem;">/month</span></div>
                         <div class="plan-period">Monthly Subscription</div>
+                        <div class="plan-collection-fee">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Collection Fee: <span class="fee-amount">1.5%</span> (<span class="fee-total">$5.96</span>/month)</span>
+                        </div>
                         
-<div class="plan-collection-fee">
-<i class="fas fa-exchange-alt"></i>
-<span>Collection Fee: <span class="fee-amount">1.5%</span> </span>
-</div>                        <div class="plan-setup-fee">
+                        <div class="plan-setup-fee">
                             <i class="fas fa-dollar-sign"></i>
                             <span>Setup Fee: $297 (One-Time)</span>
                         </div>
@@ -4324,11 +4328,12 @@ border-color: rgba(40, 167, 69, 0.3);
                         <h3 class="plan-name">ENTERPRISE</h3>
                         <div class="plan-price">$897<span style="font-size: 1.2rem;">/month</span></div>
                         <div class="plan-period">Monthly Subscription</div>
+                        <div class="plan-collection-fee">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Collection Fee: <span class="fee-amount">1%</span> (<span class="fee-total">$8.97</span>/month)</span>
+                        </div>
                         
-<div class="plan-collection-fee">
-<i class="fas fa-exchange-alt"></i>
-<span>Collection Fee: <span class="fee-amount">1%</span> </span>
-</div>                        <div class="plan-setup-fee">
+                        <div class="plan-setup-fee">
                             <i class="fas fa-dollar-sign"></i>
                             <span>Setup Fee: $1,297 - $6,997</span>
                         </div>
@@ -6809,126 +6814,10 @@ border-color: rgba(40, 167, 69, 0.3);
         }
         
         function printDocument(filename) {
-            showNotification(`Preparing ${filename} for printing...`, 'info');
-            
-            const printContent = document.createElement('div');
-            printContent.id = 'printContent';
-            printContent.style.cssText = 'position: absolute; left: -9999px; top: -9999px;';
-            
-            let documentContent = getDocumentContent(filename);
-            
-            printContent.innerHTML = `
-                <div style="font-family: Arial, sans-serif; margin: 40px; color: #333;">
-                    <div style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #0066cc;">
-                        <img src="my-logo.png" alt="HealthIntake AI" style="height: 60px; margin-bottom: 10px;">
-                        <h1 style="color: #0066cc; margin: 10px 0; font-size: 24px;">HealthIntake AI</h1>
-                        <div style="color: #666; font-size: 14px; margin-bottom: 20px;">AI-Powered Healthcare Platform</div>
-                        <div style="font-size: 18px; font-weight: bold;">${getDocumentTitle(filename)}</div>
-                    </div>
-                    
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                        <strong>Patient:</strong> [Patient Name] | <strong>Date:</strong> ${new Date().toLocaleDateString()} | <strong>ID:</strong> [Patient ID]
-                    </div>
-                    
-                    <div style="line-height: 1.6;">
-                        ${documentContent}
-                    </div>
-                    
-                    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; text-align: center; font-size: 12px; color: #666;">
-                        Document printed from HealthIntake AI • HIPAA Compliant • ${new Date().toLocaleDateString()}
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(printContent);
-            
+            showNotification(`Printing ${filename}...`, 'info');
             setTimeout(() => {
-                window.print();
-                setTimeout(() => {
-                    document.body.removeChild(printContent);
-                    showNotification(`${filename} printed successfully!`, 'success');
-                }, 100);
-            }, 500);
-        }
-        
-        function getDocumentContent(filename) {
-            const documents = {
-                'consent_form.pdf': '<h2>Patient Consent Form</h2><p>I hereby consent to treatment...</p>',
-                'medical_history.pdf': '<h2>Medical History</h2><p>Patient medical history details...</p>',
-                'insurance_claim.pdf': '<h2>Insurance Claim</h2><p>Insurance claim information...</p>',
-                'treatment_plan.pdf': '<h2>Treatment Plan</h2><p>Detailed treatment plan...</p>'
-            };
-            return documents[filename] || '<h2>Document</h2><p>Document content not found.</p>';
-        }
-        
-        function getDocumentTitle(filename) {
-            const titles = {
-                'consent_form.pdf': 'Patient Consent Form',
-                'medical_history.pdf': 'Medical History',
-                'insurance_claim.pdf': 'Insurance Claim Form',
-                'treatment_plan.pdf': 'Treatment Plan'
-            };
-            return titles[filename] || 'Document';
-        }
-                <body>
-                    <div class="print-header">
-                        <img src="my-logo.png" alt="HealthIntake AI">
-                        <h1>HealthIntake AI</h1>
-                        <div class="subtitle">AI-Powered Healthcare Platform</div>
-                        <div class="document-title">${getDocumentTitle(filename)}</div>
-                    </div>
-                    
-                    <div class="patient-info">
-                        <strong>Patient:</strong> [Patient Name] | <strong>Date:</strong> ${new Date().toLocaleDateString()} | <strong>ID:</strong> [Patient ID]
-                    </div>
-                    
-                    <div class="document-content">
-                        ${documentContent}
-                    </div>
-                    
-                    <div class="print-footer">
-                        Document printed from HealthIntake AI • HIPAA Compliant • ${new Date().toLocaleDateString()}
-                    </div>
-                    
-                    <div class="no-print" style="margin-top: 30px; text-align: center;">
-                        <button onclick="window.print()" style="padding: 10px 20px; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                            Print Document
-                        </button>
-                    </div>
-                    
-                    <script>
-                        setTimeout(() => {
-                            window.print();
-                            setTimeout(() => {
-                                window.close();
-                            }, 1000);
-                        }, 500);
-                    </script>
-                </body>
-                </html>
-            `);
-            
-            printWindow.document.close();
-        }
-        
-        function getDocumentContent(filename) {
-            const documents = {
-                'consent_form.pdf': '<h2>Patient Consent Form</h2><p>I hereby consent to treatment...</p>',
-                'medical_history.pdf': '<h2>Medical History</h2><p>Patient medical history details...</p>',
-                'insurance_claim.pdf': '<h2>Insurance Claim</h2><p>Insurance claim information...</p>',
-                'treatment_plan.pdf': '<h2>Treatment Plan</h2><p>Detailed treatment plan...</p>'
-            };
-            return documents[filename] || '<h2>Document</h2><p>Document content not found.</p>';
-        }
-        
-        function getDocumentTitle(filename) {
-            const titles = {
-                'consent_form.pdf': 'Patient Consent Form',
-                'medical_history.pdf': 'Medical History',
-                'insurance_claim.pdf': 'Insurance Claim Form',
-                'treatment_plan.pdf': 'Treatment Plan'
-            };
-            return titles[filename] || 'Document';
+                showNotification(`${filename} sent to printer!`, 'success');
+            }, 1000);
         }
         
         function uploadNewDocument() {
@@ -7381,6 +7270,7 @@ border-color: rgba(40, 167, 69, 0.3);
         updateUIForRole('administrator');
     </script>
 <script>
+// Collection Fee Configuration
 const feeRates = {
 "basic": 0.02,
 "professional": 0.015,
@@ -7410,97 +7300,139 @@ feeElements[2].querySelector(".fee-total").textContent = "$" + enterpriseFee.toF
 
 document.addEventListener("DOMContentLoaded", updateCollectionFees);
 </script></body>
-</html><style>.login-form-header { margin-top: 100px !important; }</style>
-<style>#site-logo { height: 180px; margin: 20px auto; display: block; } .logo-img { display: none; }</style>
-<style>div.header-logo > div { display: none; }</style>
-<style>.header-logo { display: none !important; }</style>
+</html><style>.login-form-header { margin-top: 100px !important; }<style>
+.plan-collection-fee {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin: 15px 0;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-        /* Print Logo - Only shows when printing */
-        @media print {
-            .print-logo {
-                display: block !important;
-                text-align: center;
-                margin-bottom: 20px;
-                padding-bottom: 20px;
-                border-bottom: 2px solid #000;
-            }
-            
-            .print-logo img {
-                height: 60px;
-                max-width: 200px;
-            }
-            
-            .print-footer {
-                display: block !important;
-                text-align: center;
-                margin-top: 30px;
-                padding-top: 20px;
-                border-top: 1px solid #ccc;
-                font-size: 12px;
-                color: #666;
-            }
-        }
-        
-        /* Hide print elements on screen */
-        .print-logo,
-        .print-footer {
-            display: none;
-        }
+.plan-collection-fee i {
+    color: #28a745;
+    font-size: 1.1rem;
+}
 
-        /* TEST PRINT FUNCTION - REMOVE LATER */
-        function testPrint() {
-            const testDiv = document.createElement('div');
-            testDiv.innerHTML = `
-                <div style="padding: 20px;">
-                    <h1>TEST PRINT</h1>
-                    <p>If you see this, printing works.</p>
-                    <img src="my-logo.png" alt="Logo" style="height: 50px;">
-                </div>
-            `;
-            document.body.appendChild(testDiv);
-            window.print();
-            document.body.removeChild(testDiv);
-        }
+.plan-collection-fee .fee-amount {
+    font-weight: 700;
+    color: #28a745;
+}
 
-        function directPrintTest() {
-            const content = `
-                <html>
-                <head><title>Print Test</title></head>
-                <body style="padding: 40px; font-family: Arial;">
-                    <div style="text-align: center; margin-bottom: 30px;">
-                        <img src="my-logo.png" alt="HealthIntake AI" style="height: 60px;">
-                        <h1 style="color: #0066cc;">HealthIntake AI</h1>
-                        <p>Test Print Document</p>
-                    </div>
-                    <p>If you can see this, printing is working!</p>
-                </body>
-                </html>
-            `;
-            
-            const printWindow = window.open();
-            printWindow.document.write(content);
-            printWindow.document.close();
-            
-            setTimeout(() => {
-                printWindow.print();
-                printWindow.close();
-            }, 500);
-        }
-<div style="position: fixed; bottom: 10px; right: 10px; z-index: 9999;"><button onclick="directPrintTest()" style="background: red; color: white; padding: 10px; border: none; border-radius: 5px;">TEST PRINT HERE</button></div>
-<script>
-// Add test print button after page loads
-document.addEventListener('DOMContentLoaded', function() {
-    const testButton = document.createElement('button');
-    testButton.textContent = '🔥 TEST PRINT LOGO 🔥';
-    testButton.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 99999; background: red; color: white; padding: 15px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.5); cursor: pointer;';
-    testButton.onclick = function() {
-        // Simple test print
-        const content = '<html><head><title>Test</title></head><body style="padding: 40px;"><h1>HealthIntake AI</h1><p>Test print with logo</p></body></html>';
-        const win = window.open('', '_blank');
-        win.document.write(content);
-        win.document.close();
-        win.print();
-    };
-    document.body.appendChild(testButton);
-});
-</script>
+.plan-collection-fee .fee-total {
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.subscription-plan.featured .plan-collection-fee,
+.subscription-plan.featured-enterprise .plan-collection-fee {
+    background: rgba(40, 167, 69, 0.1);
+    border-color: rgba(40, 167, 69, 0.3);
+}
+</style>\n</style>
+<style>#site-logo { height: 180px; margin: 20px auto; display: block; } .logo-img { display: none; }<style>
+.plan-collection-fee {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin: 15px 0;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.plan-collection-fee i {
+    color: #28a745;
+    font-size: 1.1rem;
+}
+
+.plan-collection-fee .fee-amount {
+    font-weight: 700;
+    color: #28a745;
+}
+
+.plan-collection-fee .fee-total {
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.subscription-plan.featured .plan-collection-fee,
+.subscription-plan.featured-enterprise .plan-collection-fee {
+    background: rgba(40, 167, 69, 0.1);
+    border-color: rgba(40, 167, 69, 0.3);
+}
+</style>\n</style>
+<style>div.header-logo > div { display: none; }<style>
+.plan-collection-fee {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin: 15px 0;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.plan-collection-fee i {
+    color: #28a745;
+    font-size: 1.1rem;
+}
+
+.plan-collection-fee .fee-amount {
+    font-weight: 700;
+    color: #28a745;
+}
+
+.plan-collection-fee .fee-total {
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.subscription-plan.featured .plan-collection-fee,
+.subscription-plan.featured-enterprise .plan-collection-fee {
+    background: rgba(40, 167, 69, 0.1);
+    border-color: rgba(40, 167, 69, 0.3);
+}
+</style>\n</style>
+<style>.header-logo { display: none !important; }<style>
+.plan-collection-fee {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin: 15px 0;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.plan-collection-fee i {
+    color: #28a745;
+    font-size: 1.1rem;
+}
+
+.plan-collection-fee .fee-amount {
+    font-weight: 700;
+    color: #28a745;
+}
+
+.plan-collection-fee .fee-total {
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.subscription-plan.featured .plan-collection-fee,
+.subscription-plan.featured-enterprise .plan-collection-fee {
+    background: rgba(40, 167, 69, 0.1);
+    border-color: rgba(40, 167, 69, 0.3);
+}
+</style>\n</style>
