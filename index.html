@@ -6808,23 +6808,6 @@ border-color: rgba(40, 167, 69, 0.3);
             }, 1000);
         }
         
-        function printWithLogo(filename) {
-    const w = window.open("", "_blank");
-    w.document.write(`<html><head><title>${filename}</title></head><body style="margin:40px;font-family:Arial;"><div style="text-align:center;"><img src="my-logo.png" alt="HealthIntake AI" style="height:60px;"><h1 style="color:#0066cc;">HealthIntake AI</h1><h2>${filename}</h2></div><p>Patient Document</p></body></html>`);
-    w.document.close();
-    w.print();
-    w.close();
-}
-        
-        function getDocumentContent(filename) {
-            const documents = {
-                'consent_form.pdf': '<h2>Patient Consent Form</h2><p>I hereby consent to treatment...</p>',
-                'medical_history.pdf': '<h2>Medical History</h2><p>Patient medical history details...</p>',
-                'insurance_claim.pdf': '<h2>Insurance Claim</h2><p>Insurance claim information...</p>',
-                'treatment_plan.pdf': '<h2>Treatment Plan</h2><p>Detailed treatment plan...</p>'
-            };
-            return documents[filename] || '<h2>Document</h2><p>Document content not found.</p>';
-        }
         
         function getDocumentTitle(filename) {
             const titles = {
@@ -7495,69 +7478,6 @@ console.log("Test 2: printDocument function exists:", typeof printDocument);
             w.document.close();
             w.print();
             w.close();
-        }
-        function printWithLogo(filename) {
-            const win = window.open('', '_blank');
-            win.document.write('<html><head><title>' + filename + '</title></head><body style="margin:40px"><img src="my-logo.png" alt="Logo" style="height:60px"><h1>HealthIntake AI</h1><p>' + filename + '</p></body></html>');
-            win.document.close();
-            win.focus();
-            win.print();
-            win.close();
-        }
-        function printWithLogo(filename) {
-            try {
-                const printWindow = window.open('', '_blank', 'width=800,height=600');
-                if (!printWindow) {
-                    alert('Please allow popups for this site to print.');
-                    return;
-                }
-                
-                printWindow.document.write(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <title>${filename}</title>
-                        <style>
-                            @media print {
-                                @page { margin: 0.5in; }
-                                body { margin: 0; }
-                            }
-                            body {
-                                font-family: Arial, sans-serif;
-                                margin: 40px;
-                            }
-                            .header {
-                                text-align: center;
-                                margin-bottom: 30px;
-                            }
-                            .header img {
-                                height: 60px;
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="header">
-                            <img src="my-logo.png" alt="HealthIntake AI">
-                            <h1 style="color: #0066cc;">HealthIntake AI</h1>
-                            <h2>${filename.replace(/_/g, ' ').replace('.pdf', '')}</h2>
-                        </div>
-                        <p>Patient Document - ${new Date().toLocaleDateString()}</p>
-                    </body>
-                    </html>
-                `);
-                
-                printWindow.document.close();
-                printWindow.focus();
-                
-                setTimeout(() => {
-                    printWindow.print();
-                    printWindow.close();
-                }, 100);
-                
-            } catch (error) {
-                console.error('Print error:', error);
-                alert('Print failed: ' + error.message);
-            }
         }
         function printWithLogo(elementId = null) {
             showNotification('Preparing document with logo...', 'info');
