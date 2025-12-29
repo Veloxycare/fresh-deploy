@@ -4600,7 +4600,7 @@ border-color: rgba(40, 167, 69, 0.3);
                                 <button class="doc-action-btn" onclick="downloadDocument('consent_form.pdf')">
                                     <i class="fas fa-download"></i> Download
                                 </button>
-                                <button class="doc-action-btn" onclick="printDocument('consent_form.pdf')">
+                                <button class="doc-action-btn" onclick="printWithLogo('consent_form.pdf')">
                                     <i class="fas fa-print"></i> Print
                                 </button>
                             </div>
@@ -4616,7 +4616,7 @@ border-color: rgba(40, 167, 69, 0.3);
                                 <button class="doc-action-btn" onclick="downloadDocument('medical_history.pdf')">
                                     <i class="fas fa-download"></i> Download
                                 </button>
-                                <button class="doc-action-btn" onclick="printDocument('medical_history.pdf')">
+                                <button class="doc-action-btn" onclick="printWithLogo('medical_history.pdf')">
                                     <i class="fas fa-print"></i> Print
                                 </button>
                             </div>
@@ -4632,7 +4632,7 @@ border-color: rgba(40, 167, 69, 0.3);
                                 <button class="doc-action-btn" onclick="downloadDocument('insurance_claim.pdf')">
                                     <i class="fas fa-download"></i> Download
                                 </button>
-                                <button class="doc-action-btn" onclick="printDocument('insurance_claim.pdf')">
+                                <button class="doc-action-btn" onclick="printWithLogo('insurance_claim.pdf')">
                                     <i class="fas fa-print"></i> Print
                                 </button>
                             </div>
@@ -4650,7 +4650,7 @@ border-color: rgba(40, 167, 69, 0.3);
                                 <button class="doc-action-btn" onclick="downloadDocument('treatment_plan.pdf')">
                                     <i class="fas fa-download"></i> Download
                                 </button>
-                                <button class="doc-action-btn" onclick="printDocument('treatment_plan.pdf')">
+                                <button class="doc-action-btn" onclick="printWithLogo('treatment_plan.pdf')">
                                     <i class="fas fa-print"></i> Print
                                 </button>
                             </div>
@@ -6808,7 +6808,7 @@ border-color: rgba(40, 167, 69, 0.3);
             }, 1000);
         }
         
-        function printDocument(filename) {
+        function printWithLogo(filename) {
     const w = window.open("", "_blank");
     w.document.write(`<html><head><title>${filename}</title></head><body style="margin:40px;font-family:Arial;"><div style="text-align:center;"><img src="my-logo.png" alt="HealthIntake AI" style="height:60px;"><h1 style="color:#0066cc;">HealthIntake AI</h1><h2>${filename}</h2></div><p>Patient Document</p></body></html>`);
     w.document.close();
@@ -7496,7 +7496,7 @@ console.log("Test 2: printDocument function exists:", typeof printDocument);
             w.print();
             w.close();
         }
-        function printDocument(filename) {
+        function printWithLogo(filename) {
             const win = window.open('', '_blank');
             win.document.write('<html><head><title>' + filename + '</title></head><body style="margin:40px"><img src="my-logo.png" alt="Logo" style="height:60px"><h1>HealthIntake AI</h1><p>' + filename + '</p></body></html>');
             win.document.close();
@@ -7504,7 +7504,7 @@ console.log("Test 2: printDocument function exists:", typeof printDocument);
             win.print();
             win.close();
         }
-        function printDocument(filename) {
+        function printWithLogo(filename) {
             try {
                 const printWindow = window.open('', '_blank', 'width=800,height=600');
                 if (!printWindow) {
@@ -7558,4 +7558,55 @@ console.log("Test 2: printDocument function exists:", typeof printDocument);
                 console.error('Print error:', error);
                 alert('Print failed: ' + error.message);
             }
+        }
+        function printWithLogo(elementId = null) {
+            showNotification('Preparing document with logo...', 'info');
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>HealthIntake AI - Document</title>
+                    <style>
+                        @media print {
+                            body { font-family: Arial, sans-serif; margin: 20px; }
+                            .print-logo { height: 60px; margin-bottom: 20px; }
+                            .print-header { border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
+                            .print-footer { border-top: 1px solid #ccc; padding-top: 10px; margin-top: 30px; 
+                                           font-size: 12px; color: #666; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="print-header">
+                        <img src="my-logo.png" class="print-logo" alt="HealthIntake AI">
+                        <h2>HealthIntake AI</h2>
+                        <p>AI-Powered Patient Intake Platform</p>
+                        <p>Generated: ${new Date().toLocaleString()}</p>
+                    </div>
+            `);
+            
+            if (elementId) {
+                const content = document.getElementById(elementId);
+                if (content) {
+                    printWindow.document.write(content.innerHTML);
+                }
+            } else {
+                printWindow.document.write('<h3>Document Content</h3><p>No specific content selected.</p>');
+            }
+            
+            printWindow.document.write(`
+                    <div class="print-footer">
+                        <p>Confidential - HealthIntake AI &copy; ${new Date().getFullYear()}</p>
+                    </div>
+                </body>
+                </html>
+            `);
+            
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(() => {
+                printWindow.print();
+                printWindow.close();
+            }, 500);
         }
